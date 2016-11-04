@@ -8,6 +8,9 @@ ENV TERM xterm
 # Fix command line compile issue with bundler.
 ENV LC_ALL en_US.utf8
 
+RUN rpm --import https://download.newrelic.com/548C16BF.gpg
+RUN rpm -Uvh https://yum.newrelic.com/pub/newrelic/el5/x86_64/newrelic-repo-5-3.noarch.rpm
+
 # Install and enable repositories
 RUN yum -y update && \
     yum -y install epel-release && \
@@ -24,7 +27,8 @@ RUN yum -y groupinstall "Development Tools" && \
     net-tools \
     python34 \
     vim \
-    wget
+    wget \
+    newrelic-sysmond
 
 # Install PHP and PHP modules
 RUN yum -y install \
@@ -38,7 +42,8 @@ RUN yum -y install \
     php56u-odbc \
     php56u-pear \
     php56u-pecl-imagick \
-    php56u-pecl-zendopcache
+    php56u-pecl-zendopcache \
+    newrelic-php5
 
 # Install misc tools
 RUN yum -y install \
@@ -74,6 +79,7 @@ RUN rsync -a /tmp/centos-7/etc/httpd /etc/ && \
     apachectl configtest
 
 RUN rsync -a /tmp/centos-7/etc/php.ini /etc/.
+RUN echo "<?php phpinfo(); ?>" > /var/www/public/info.php
 
 EXPOSE 80 443
 
