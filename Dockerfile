@@ -24,7 +24,8 @@ RUN yum -y groupinstall "Development Tools" && \
     net-tools \
     python34 \
     vim \
-    wget
+    wget \
+    memcached
 
 # Install PHP and PHP modules
 RUN yum -y install \
@@ -38,7 +39,8 @@ RUN yum -y install \
     php56u-odbc \
     php56u-pear \
     php56u-pecl-imagick \
-    php56u-pecl-zendopcache
+    php56u-pecl-zendopcache \
+    php56u-pecl-memcache
 
 # Install misc tools
 RUN yum -y install \
