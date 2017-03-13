@@ -8,15 +8,16 @@ ENV TERM xterm
 # Fix command line compile issue with bundler.
 ENV LC_ALL en_US.utf8
 
+# Custom docroot (see conf/run-httpd.sh)
+ENV DOCROOT /var/www/public
+
 # Install and enable repositories
 RUN yum -y update && \
     yum -y install epel-release && \
-    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \ 
     rpm -Uvh https://centos7.iuscommunity.org/ius-release.rpm && \
     yum -y update
 
-RUN yum -y groupinstall "Development Tools" && \
-    yum -y install \
+RUN yum -y install \
     curl \
     git \
     mariadb \
@@ -24,7 +25,7 @@ RUN yum -y groupinstall "Development Tools" && \
     net-tools \
     python34 \
     vim \
-    wget
+    wget \
 
 # Install PHP and PHP modules
 RUN yum -y install \
@@ -60,20 +61,17 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     drush/drush:7.* && \
     ln -s /usr/local/src/vendor/bin/drush /usr/bin/drush
 
-RUN drush dl registry_rebuild
+RUN drush dl registry_rebuild-7.x
     
 # Disable services management by systemd.
-RUN systemctl disable httpd.service && \
-    systemctl disable rsyslog.service
+RUN systemctl disable httpd.service
 
 # Apache config, and PHP config, test apache config
 # See https://github.com/docker/docker/issues/7511 /tmp usage
 COPY public/index.php /var/www/public/index.php
 COPY centos-7 /tmp/centos-7/
-RUN rsync -a /tmp/centos-7/etc/httpd /etc/ && \
+RUN rsync -a /tmp/centos-7/etc/ /etc/ && \
     apachectl configtest
-
-RUN rsync -a /tmp/centos-7/etc/php.ini /etc/.
 
 EXPOSE 80 443
 
