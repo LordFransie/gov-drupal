@@ -76,8 +76,16 @@ RUN rsync -a /tmp/centos-7/etc/php.ini /etc/.
 EXPOSE 80 443
 
 #Redis Installation
-ADD conf/redis.sh /redis.sh
-CMD ["/redis.sh"]
+RUN yum install redis -y
+RUN cd /tmp && \
+    git clone git://github.com/nicolasff/phpredis.git && \
+    cd phpredis && \
+    phpize && \
+    ./configure && \
+    make && \
+    make install
+RUN echo "extension=redis.so">/etc/php.d/redis.ini
+
 
 # Simple startup script to avoid some issues observed with container restart 
 ADD conf/run-httpd.sh /run-httpd.sh
