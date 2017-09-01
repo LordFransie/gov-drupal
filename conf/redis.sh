@@ -12,4 +12,4 @@ make install
 echo "extension=redis.so">/etc/php.d/redis.ini
 
 # Apply changes to Apache
-httpd -k restart
+httpd -k graceful
