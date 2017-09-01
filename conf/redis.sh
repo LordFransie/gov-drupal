@@ -1,9 +1,5 @@
 #!/bin/bash
-
-#Install Redis Server
-yum install redis -y
-
-#Instal PHP Redis
+# Install PHP Redis
 cd /tmp
 git clone git://github.com/nicolasff/phpredis.git
 cd phpredis
@@ -12,5 +8,8 @@ phpize
 make
 make install
 
-#Update Php Config
+# Update Php Config
 echo "extension=redis.so">/etc/php.d/redis.ini
+
+# Apply changes to Apache
+httpd -k restart
