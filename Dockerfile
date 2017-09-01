@@ -39,7 +39,8 @@ RUN yum -y install \
     php56u-pear \
     php56u-pecl-imagick \
     php56u-pecl-zendopcache \
-    php56u-pecl-memcache
+    php56u-pecl-memcache \
+    php56u-devel
 
 # Install misc tools
 RUN yum -y install \
@@ -74,11 +75,16 @@ RUN rsync -a /tmp/centos-7/etc/php.ini /etc/.
 
 EXPOSE 80 443
 
+#Redis Installation
+ADD conf/redis.sh /redis.sh
+CMD ["/redis.sh"]
+
 # Simple startup script to avoid some issues observed with container restart 
 ADD conf/run-httpd.sh /run-httpd.sh
 RUN chmod -v +x /run-httpd.sh
 
 ADD conf/mail.ini /etc/php.d/mail.ini
 RUN chmod 644 /etc/php.d/mail.ini
+
 
 CMD ["/run-httpd.sh"]
