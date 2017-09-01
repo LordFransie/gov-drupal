@@ -1,5 +1,6 @@
 #!/bin/bash
 # Install PHP Redis
+echo Installing Redis
 cd /tmp
 git clone git://github.com/nicolasff/phpredis.git
 cd phpredis
