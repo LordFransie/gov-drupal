@@ -78,7 +78,6 @@ EXPOSE 80 443
 #Redis Installation
 ADD conf/redis.sh /redis.sh
 RUN chmod -v +x /redis.sh
-
 CMD ["/redish.sh"]
 
 
