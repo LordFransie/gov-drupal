@@ -77,8 +77,9 @@ EXPOSE 80 443
 
 #Redis Installation
 ADD conf/redis.sh /redis.sh
+RUN yum -y install redis
 RUN chmod -v +x /redis.sh
-RUN echo Installing Redis && \
+RUN echo Installing PHP-Redis && \
 cd /tmp && \
 git clone git://github.com/nicolasff/phpredis.git && \
 cd phpredis && \
@@ -87,10 +88,8 @@ phpize && \
 make && \
 make install
 
-
+# Add library to PHP
 RUN echo "extension=redis.so">/etc/php.d/redis.ini
-
-
 RUN httpd -k graceful
 
 
