@@ -78,7 +78,20 @@ EXPOSE 80 443
 #Redis Installation
 ADD conf/redis.sh /redis.sh
 RUN chmod -v +x /redis.sh
-CMD ["/redis.sh"]
+RUN echo Installing Redis && \
+cd /tmp && \
+git clone git://github.com/nicolasff/phpredis.git && \
+cd phpredis && \
+phpize && \
+./configure && \
+make && \
+make install
+
+
+RUN echo "extension=redis.so">/etc/php.d/redis.ini
+
+
+RUN httpd -k graceful
 
 
 # Simple startup script to avoid some issues observed with container restart 
