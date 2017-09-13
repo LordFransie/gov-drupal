@@ -40,8 +40,8 @@ RUN yum -y install \
     php71u-mysqlnd \
     php71u-pecl-imagick \
     php71u-pecl-json \
-    php71u-pecl-zendopcache
-    php-devel
+    php71u-pecl-zendopcache \
+    php71u-devel
 
 # Install misc tools
 RUN yum -y install \
