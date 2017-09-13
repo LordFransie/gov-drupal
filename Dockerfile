@@ -28,19 +28,20 @@ RUN yum -y groupinstall "Development Tools" && \
 
 # Install PHP and PHP modules
 RUN yum -y install \
-    php56u \
-    php56u-curl \
-    php56u-gd \
-    php56u-imap \
-    php56u-mbstring \
-    php56u-mcrypt \
-    php56u-mysql \
-    php56u-odbc \
-    php56u-pear \
-    php56u-pecl-imagick \
-    php56u-pecl-zendopcache \
-    php56u-pecl-memcache \
-    php56u-devel
+    php71u \
+    php71u-curl \
+    php71u-gd \
+    php71u-imap \
+    php71u-mbstring \
+    php71u-mcrypt \
+    php71u-mysql \
+    php71u-odbc \
+    php71u-pear \
+    php71u-mysqlnd \
+    php71u-pecl-imagick \
+    php71u-pecl-json \
+    php71u-pecl-zendopcache
+    php71u-devel
 
 # Install misc tools
 RUN yum -y install \
