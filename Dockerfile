@@ -41,7 +41,7 @@ RUN yum -y install \
     php71u-pecl-imagick \
     php71u-pecl-json \
     php71u-pecl-zendopcache
-    php71u-devel
+    php-devel
 
 # Install misc tools
 RUN yum -y install \
