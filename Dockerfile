@@ -1,5 +1,5 @@
 FROM centos:7
-MAINTAINER Ron Williams <hello@ronwilliams.io>
+MAINTAINER Frans Alkemade <falkemade@itcon-inc.com>
 ENV PATH /usr/local/src/vendor/bin/:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Set TERM env to avoid mysql client error message "TERM environment variable not set" when running from inside the container
@@ -43,6 +43,7 @@ RUN yum -y install \
     php71u-pecl-zendopcache \
     php71u-devel
 
+
 # Install misc tools
 RUN yum -y install \
     python-setuptools
@@ -69,8 +70,8 @@ RUN drush dl registry_rebuild
 # See https://github.com/docker/docker/issues/7511 /tmp usage
 COPY public/index.php /var/www/public/index.php
 COPY centos-7 /tmp/centos-7/
-RUN rsync -a /tmp/centos-7/etc/httpd /etc/ && \
-    apachectl configtest
+#RUN rsync -a /tmp/centos-7/etc/httpd /etc/ && \
+#    apachectl configtest
 
 RUN rsync -a /tmp/centos-7/etc/php.ini /etc/.
 
