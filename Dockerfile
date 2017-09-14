@@ -70,8 +70,8 @@ RUN drush dl registry_rebuild
 # See https://github.com/docker/docker/issues/7511 /tmp usage
 COPY public/index.php /var/www/public/index.php
 COPY centos-7 /tmp/centos-7/
-#RUN rsync -a /tmp/centos-7/etc/httpd /etc/ && \
-#    apachectl configtest
+RUN rsync -a /tmp/centos-7/etc/httpd /etc/ && \
+    apachectl configtest
 
 RUN rsync -a /tmp/centos-7/etc/php.ini /etc/.
 
