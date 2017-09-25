@@ -78,8 +78,9 @@ RUN rsync -a /tmp/centos-7/etc/php.ini /etc/.
 EXPOSE 80 443
 
 #Redis Installation
-RUN yum -y install redis
-RUN yum -y install php56u-pecl-redis
+RUN yum -y install redis \
+    php71u-pecl-redis.x86_64
+
 
 # Add library to PHP
 RUN echo "extension=redis.so">/etc/php.d/redis.ini
